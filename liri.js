@@ -3,36 +3,39 @@ const axios = require("axios");
 
 const command = process.argv[2];
 const input = process.argv.splice(3).join("+");
-const spotify = keys.spotify;
-// const spotify = new Spotify(keys.spotify);
+// const spotify = keys.spotify;
 
-// require("dotenv").config();
+require("dotenv").config();
 
-  /* Load the HTTP library */
-  var http = require("http");
+var Spotify = require('node-spotify-api');
 
-  /* Create an HTTP server to handle responses */
-
-  http.createServer(function(request, response) {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
-    response.end();
-  }).listen(8888);
-
-  
-  axios.get("https://accounts.spotify.com/authorize?client_id=b0a904ec1a93415bbdb50f17e873480c&response_type=code&redirect_uri=localhost:8888").then(
-      function(response) {
-          console.log(response);
-      }
-  )
-
-  console.log(spotify);
-
-
-
+//   axios.get("https://accounts.spotify.com/authorize?client_id=b0a904ec1a93415bbdb50f17e873480c&response_type=code&redirect_uri=localhost:8888").then(
+//       function(response) {
+//           console.log(response);
+//       }
+//   )
 
 const getSongInfo = function (song) {
-    axios.get("")
+    const spotify = new Spotify(keys.spotify);
+    spotify.search({
+        type: 'track',
+        query: song,
+        limit: 1,
+    }, function(err, data){
+        if(err){
+            return console.log(`error occurred: ${err}`);
+        }
+        let firstResult = data.tracks.items[0];
+        let returnString = 
+        `Artist: ${firstResult.artists[0].name}
+        Song: ${firstResult.name}
+        Preview Link: ${firstResult.preview_url}
+        Album: ${firstResult.album.name}`
+
+        // console.log(returnString);
+        console.log(returnString);
+        // console.log(data.tracks.items[0]);
+    })
 }
 
 switch (command) {
@@ -47,7 +50,7 @@ switch (command) {
         break;
     default:
         console.log("invalid input");
-        break;    
+        break;
 }
 
 // process.exit();
