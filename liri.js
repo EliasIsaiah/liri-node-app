@@ -26,23 +26,46 @@ const getSongInfo = function (song) {
             return console.log(`error occurred: ${err}`);
         }
         let firstResult = data.tracks.items[0];
-        let returnString = 
-        `Artist: ${firstResult.artists[0].name}
+        let returnString =`
+        Artist: ${firstResult.artists[0].name}
         Song: ${firstResult.name}
         Preview Link: ${firstResult.preview_url}
-        Album: ${firstResult.album.name}`
+        Album: ${firstResult.album.name}
+        `
 
-        // console.log(returnString);
         console.log(returnString);
-        // console.log(data.tracks.items[0]);
+    })
+}
+
+const getConcertInfo = function(artist) {
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(
+        function(response) {
+            response.data.map(concertObject => {
+                let concertString =`
+                Name: ${concertObject.venue.name}
+                Location: ${concertObject.venue.city}, ${concertObject.venue.region} ${concertObject.venue.country}
+                Date: ${concertObject.on_sale_datetime}
+                `
+
+                console.log(concertString);
+
+            })
+        },
+    ).catch(function(error) {
+        console.log(error);
     })
 }
 
 switch (command) {
     case "concert-this":
+        getConcertInfo(input);
         break;
     case "spotify-this-song":
-        console.log(getSongInfo(input));
+        if(!input){
+            getSongInfo("The Sign - Ace of Base")
+            break
+        }
+        getSongInfo(input);
         break;
     case "movie-this":
         break;
