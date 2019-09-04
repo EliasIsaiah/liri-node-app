@@ -1,6 +1,7 @@
 const keys = require("./keys.js");
 const axios = require("axios");
 const fs = require("fs")
+const Spotify = require('node-spotify-api');
 
 let command = process.argv[2];
 // let command = "do-what-it-says";
@@ -10,7 +11,6 @@ console.log(`input: ${input}`)
 
 require("dotenv").config();
 
-var Spotify = require('node-spotify-api');
 
 //   axios.get("https://accounts.spotify.com/authorize?client_id=b0a904ec1a93415bbdb50f17e873480c&response_type=code&redirect_uri=localhost:8888").then(
 //       function(response) {
