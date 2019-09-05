@@ -3,13 +3,24 @@
 
 Specifically, Liri provides information on concerts, songs, and movies.
 
+Technologies used on this application:
+
+* Node.js
+
+Dependencies:
+* [dotenv](https://www.npmjs.com/package/dotenv)
+* [axios](https://www.npmjs.com/package/axios)
+
 How to use Liri:
 
 Prequisites: 
 * you must have node.js installed on your system as that is what Liri runs on.
-* you will need a Spotify ID and a Spotify Secret
+* you will need a Spotify ID and a Spotify Secret stored in a local .env file in order for this application to run
 
-steps:
+DISCLAIMER:
+This application is purely experimental and requires the user to be familiar with node.js and CLI applications.
+
+Steps:
 
 1. download or fork the liri-node-js repository
 2. navigate to the repo on your local machine and run `npm install` in order to install the required packages for the application (note: some of the packages are save-dev)

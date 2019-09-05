@@ -4,19 +4,10 @@ const fs = require("fs")
 const Spotify = require('node-spotify-api');
 
 const command = process.argv[2];
-// let command = "do-what-it-says";
 const input = process.argv.splice(3).join("+");
-// console.log(`input: ${input}`)
-// const spotify = keys.spotify;
+
 
 require("dotenv").config();
-
-
-//   axios.get("https://accounts.spotify.com/authorize?client_id=b0a904ec1a93415bbdb50f17e873480c&response_type=code&redirect_uri=localhost:8888").then(
-//       function(response) {
-//           console.log(response);
-//       }
-//   )
 
 const Liri = {
 
