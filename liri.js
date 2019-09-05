@@ -3,10 +3,10 @@ const axios = require("axios");
 const fs = require("fs")
 const Spotify = require('node-spotify-api');
 
-let command = process.argv[2];
+const command = process.argv[2];
 // let command = "do-what-it-says";
-let input = process.argv.splice(3).join("+");
-console.log(`input: ${input}`)
+const input = process.argv.splice(3).join("+");
+// console.log(`input: ${input}`)
 // const spotify = keys.spotify;
 
 require("dotenv").config();
@@ -25,20 +25,22 @@ const Liri = {
         spotify.search({
             type: 'track',
             query: song,
-            limit: 1,
+            limit: 5,
         }, function (err, data) {
             if (err) {
                 return console.log(`error occurred: ${err}`);
             }
-            let firstResult = data.tracks.items[0];
-            let returnString = `
-        Artist: ${firstResult.artists[0].name}
-        Song: ${firstResult.name}
-        Preview Link: ${firstResult.preview_url}
-        Album: ${firstResult.album.name}
-        `
+            let firstResult = data.tracks.items.map((result) =>{
 
-            console.log(returnString);
+                let returnString = `
+            Artist: ${result.artists[0].name}
+            Song: ${result.name}
+            Preview Link: ${result.preview_url}
+            Album: ${result.album.name}
+            `
+    
+                console.log(returnString);
+            });
         })
     },
 
@@ -82,54 +84,44 @@ const Liri = {
             console.log(error);
         })
     },
-
-    // doWhatItSays: function () {
-    //     fs.readFile("random.txt", "utf8", function (error, data) {
-    //         if (error) {
-    //             return console.log(error);
-    //         }
-    //         let dataArr = data.split(",");
-    //         console.log(dataArr);
-
-    //         fsCommand = dataArr[0];
-    //         console.log(`command: ${fsCommand}`);
-    //         fsInput = dataArr.splice(1).join("+");
-    //         console.log(`input: ${fsInput}`);
-
-    //         switch (fsCommand) {
-    //             case "concert-this":
-    //                 this.getConcertInfo(fsInput);
-    //                 break;
-    //             case "spotify-this-song":
-    //                 if (!fsInput) {
-    //                     this.getSongInfo("The Sign - Ace of Base");
-    //                     break;
-    //                 }
-    //                 this.getSongInfo(fsInput);
-    //                 break;
-    //             case "movie-this":
-    //                 if (!fsInput) {
-    //                     this.getMovieInfo("Mr. Nobody");
-    //                     break;
-    //                 }
-    //                 this.getMovieInfo(fsInput);
-    //                 break;
-    //             default:
-    //                 console.log("invalid input");
-    //                 break;
-    //         }
-    //     })
-    // },
 }
 
-doWhatItSays = function () {
-    console.log("do what it says");
-    fs.readFile("random.txt", "utf8", function (error, data) {
-        console.log("do what it says first function");
-        if (error) {
-            return console.log(error);
-        }
+let doAction = function (inputData, commandData) {
+
+    switch (commandData) {
+        case "concert-this":
+            Liri.getConcertInfo(inputData);
+            break;
+        case "spotify-this-song":
+            if (!inputData) {
+                Liri.getSongInfo("The Sign - Ace of Base");
+                break;
+            }
+            Liri.getSongInfo(inputData);
+            break;
+        case "movie-this":
+            if (!inputData) {
+                Liri.getMovieInfo("Mr. Nobody");
+                break;
+            }
+            Liri.getMovieInfo(inputData);
+            break;
+        case "do-what-it-says":
+            readfile();
+        default:
+            console.log("invalid input");
+            break;
+    }
+}
+
+let readfile = function () {
+
+    fs.readFile("random.txt", "utf8", (error, data) => {
+        // console.log("do what it says first function");
+        if (error) throw err
+
         let dataArr = data.split(",");
+
         console.log(dataArr);
 
         fsCommand = dataArr[0];
@@ -137,60 +129,8 @@ doWhatItSays = function () {
         fsInput = dataArr.splice(1).join("+");
         console.log(`input: ${fsInput}`);
 
-        switch (fsCommand) {
-            case "concert-this":
-                Liri.getConcertInfo(fsInput);
-                break;
-            case "spotify-this-song":
-                if (!fsInput) {
-                    Liri.getSongInfo("The Sign - Ace of Base");
-                    break;
-                }
-                Liri.getSongInfo(fsInput);
-                break;
-            case "movie-this":
-                if (!fsInput) {
-                    Liri.getMovieInfo("Mr. Nobody");
-                    break;
-                }
-                Liri.getMovieInfo(fsInput);
-                break;
-            default:
-                console.log("invalid input");
-                break;
-        }
+        doAction(fsInput, fsCommand);
     })
 }
 
-if (command === "do-what-it-says") {
-    doWhatItSays();
-    command = null;
-}
-
-switch (command) {
-    // case "do-what-it-says":
-    //     Liri.doWhatItSays();
-    //     break;
-    case "concert-this":
-        Liri.getConcertInfo(input);
-        break;
-    case "spotify-this-song":
-        if (!input) {
-            Liri.getSongInfo("The Sign - Ace of Base");
-            break;
-        }
-        Liri.getSongInfo(input);
-        break;
-    case "movie-this":
-        if (!input) {
-            Liri.getMovieInfo("Mr. Nobody");
-            break;
-        }
-        Liri.getMovieInfo(input);
-        break;
-    default:
-        console.log("invalid input");
-        break;
-}
-
-// process.exit();
+doAction(input, command);
