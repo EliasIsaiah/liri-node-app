@@ -22,7 +22,7 @@ const Liri = {
             if (err) {
                 return console.log(`error occurred: ${err}`);
             }
-            let firstResult = data.tracks.items.map((result) =>{
+            let firstResult = data.tracks.items.map((result) => {
 
                 let returnString = `
             Artist: ${result.artists[0].name}
@@ -30,7 +30,7 @@ const Liri = {
             Preview Link: ${result.preview_url}
             Album: ${result.album.name}
             `
-    
+
                 console.log(returnString);
             });
         })
@@ -43,7 +43,7 @@ const Liri = {
                     let concertString = `
                 Name: ${concertObject.venue.name}
                 Location: ${concertObject.venue.city}, ${concertObject.venue.region} ${concertObject.venue.country}
-                Date: ${concertObject.on_sale_datetime}
+                Date: ${concertObject.on_sale_datetime ? moment(concertObject.on_sale_datetime).format("MM-DD-YYYY") : `N/A`}
                 `
 
                     console.log(concertString);
