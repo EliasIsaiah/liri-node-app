@@ -1,12 +1,7 @@
-const keys = require("./keys.js");
-const axios = require("axios");
-const fs = require("fs")
+const keys = require('./keys.js');
+const axios = require('axios');
 const Spotify = require('node-spotify-api');
-const moment = require('moment');
-
-const command = process.argv[2];
-const input = process.argv.splice(3).join("+");
-
+const moment = require('moment')
 
 require("dotenv").config();
 
@@ -17,12 +12,12 @@ const Liri = {
         spotify.search({
             type: 'track',
             query: song,
-            limit: 5,
-        }, function (err, data) {
+            limit: 3,
+        }, (err, data) => {
             if (err) {
                 return console.log(`error occurred: ${err}`);
             }
-            let firstResult = data.tracks.items.map((result) => {
+            data.tracks.items.map((result) => {
 
                 let returnString = `
             Artist: ${result.artists[0].name}
@@ -38,7 +33,7 @@ const Liri = {
 
     getConcertInfo: function (artist) {
         axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then(
-            function (response) {
+            (response) => {
                 response.data.map(concertObject => {
                     let concertString = `
                 Name: ${concertObject.venue.name}
@@ -50,14 +45,14 @@ const Liri = {
 
                 })
             },
-        ).catch(function (error) {
+        ).catch((error) => {
             console.log(error);
         })
     },
 
     getMovieInfo: function (movie) {
         axios.get("http://www.omdbapi.com/?apikey=trilogy&t=" + movie).then(
-            function (response) {
+            (response) => {
                 let movieString = `
                     Title: ${response.data.Title}
                     Year: ${response.data.Year}
@@ -72,57 +67,10 @@ const Liri = {
                 console.log(movieString)
 
             },
-        ).catch(function (error) {
+        ).catch((error) => {
             console.log(error);
         })
     },
 }
 
-let doAction = function (inputData, commandData) {
-
-    switch (commandData) {
-        case "concert-this":
-            Liri.getConcertInfo(inputData);
-            break;
-        case "spotify-this-song":
-            if (!inputData) {
-                Liri.getSongInfo("The Sign - Ace of Base");
-                break;
-            }
-            Liri.getSongInfo(inputData);
-            break;
-        case "movie-this":
-            if (!inputData) {
-                Liri.getMovieInfo("Mr. Nobody");
-                break;
-            }
-            Liri.getMovieInfo(inputData);
-            break;
-        case "do-what-it-says":
-            readfile();
-        default:
-            console.log("invalid input");
-            break;
-    }
-}
-
-let readfile = function () {
-
-    fs.readFile("random.txt", "utf8", (error, data) => {
-        // console.log("do what it says first function");
-        if (error) throw err
-
-        let dataArr = data.split(",");
-
-        console.log(dataArr);
-
-        fsCommand = dataArr[0];
-        console.log(`command: ${fsCommand}`);
-        fsInput = dataArr.splice(1).join("+");
-        console.log(`input: ${fsInput}`);
-
-        doAction(fsInput, fsCommand);
-    })
-}
-
-doAction(input, command);
+module.exports = Liri;
