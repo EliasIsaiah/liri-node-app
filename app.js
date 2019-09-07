@@ -30,7 +30,6 @@ const doAction = (inputData, commandData) => {
 const readTheFile = () => {
 
     fs.readFile("random.txt", "utf8", (error, data) => {
-        // console.log("do what it says first function");
         if (error) throw err
 
         let dataArr = data.split(",");
@@ -44,7 +43,7 @@ const readTheFile = () => {
     })
 }
 
-doPrompt = () => {
+const doPrompt = () => {
     inquirer.prompt([{
         type: "list",
         name: "command",
