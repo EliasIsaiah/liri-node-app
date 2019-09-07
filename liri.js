@@ -2,6 +2,7 @@ const keys = require("./keys.js");
 const axios = require("axios");
 const fs = require("fs")
 const Spotify = require('node-spotify-api');
+const moment = require('moment');
 
 const command = process.argv[2];
 const input = process.argv.splice(3).join("+");
