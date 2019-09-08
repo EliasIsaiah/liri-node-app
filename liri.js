@@ -68,7 +68,7 @@ const Liri = {
 
             },
         ).catch((error) => {
-            console.log(error);
+            console.log("An error has occurred. Please check your internet connection or try a different movie.\n" + error);
         })
     },
 }

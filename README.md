@@ -24,29 +24,49 @@ This application requires the user to be familiar with node.js and how to run CL
 
 Steps:
 
-1. download or fork the liri-node-js repository
-2. navigate to the repo on your local machine and run `npm install` in order to install the required packages for the application (note: some of the packages are save-dev)
+1. download or clone the liri-node-js repository
+2. navigate to the repo on your local machine and run `npm install` in order to install the required packages for the application
 ![npm install gif](./media/npm_install.gif)
-3. From the terminal run the application by running `node app`. 
+3. From the terminal run the application by running `node app`. At that point you can use the Inquirer interface to select four different functions:
 
-    Where the capitalised arguments are replaced with your desired search string.
+       
+    ```javascript
+    switch(input) {
+
+        case "Look up a concert":
+            [...]
+        case "Look up a song":
+            [...]
+        case "Look up a movie":
+            [...]
+        case "Do what it says":
+            [...]
+            
+    }
+    ```
+        
 
 gif examples:
-* concert-this:
->![concert-this gif](./media/concert_this.gif)
+* Look up a concert: (returns multiple concerts)
+>![concert-this gif](./media/inquirer_concert.gif)
 
-* spotify-this-song:
->![spotify-this-song gif](./media/spotify_this_song.gif)
+* spotify-this-song: (returns three songs)
+>![spotify-this-song gif](./media/inquirer_spotify.gif)
 
 * movie-this:
->![movie-this gif](./media/movie_this.gif)
+>![movie-this gif](./media/inquirer_movie.gif)
 
 The last argument "do-what-it-says" reads what is written in "random.txt" and executes it. The text in random.txt must follow a fairly strict format as there not much cleaning done to it (read:none) as it is passed directly into the program.
 
 All text in random.txt must follow the format of ARGUMENT,SEARCH STRING
 
-* do-what-it-says gif:
->![do-what-it-says gif](./media/do_what_it_says.gif)
+The arguments available are:
+* concert-this
+* spotify-this-song
+* movie-this
+
+you can see movie-this and spotify-this-song in action below:
+>![do-what-it-says gif](./media/inquirer_do_what_it_says.gif)
 
 
 
