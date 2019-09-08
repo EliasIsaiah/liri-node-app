@@ -24,7 +24,7 @@ This application requires the user to be familiar with node.js and how to run CL
 
 Steps:
 
-1. download or clone the liri-node-js repository
+1. download or clone the liri-node-app repository
 2. navigate to the repo on your local machine and run `npm install` in order to install the required packages for the application
 ![npm install gif](./media/npm_install.gif)
 3. From the terminal run the application by running `node app`. At that point you can use the Inquirer interface to select four different functions:
