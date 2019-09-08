@@ -44,9 +44,8 @@ Steps:
             
     }
     ```
-        
+________________________________
 
-gif examples:
 * Look up a concert: (returns multiple concerts)
 >![concert-this gif](./media/inquirer_concert.gif)
 
