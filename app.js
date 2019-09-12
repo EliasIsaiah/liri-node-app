@@ -30,7 +30,7 @@ const doAction = (inputData, commandData) => {
 const readTheFile = () => {
 
     fs.readFile("random.txt", "utf8", (error, data) => {
-        if (error) throw err
+        if (error) throw error 
 
         let dataArr = data.split(",");
 
